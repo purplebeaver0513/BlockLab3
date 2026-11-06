@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'none'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Block Lab • Coding Studio</title>
+<meta name="description" content="Your creative coding playground. Snap together blocks, explore JavaScript, draw characters, and bring ideas to life.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+ <a class="brand" href="#" aria-label="Block Lab home"><span class="brand-mark"><i></i><i></i><i></i></span>block<span>lab</span><b>CODE STUDIO</b></a>
+ <div class="header-divider"></div>
+ <div class="menu-wrap"><button id="fileButton" class="quiet">File <span class="chev">⌄</span></button><div id="fileMenu" class="dropdown" hidden><button data-file="new">＋ New project</button><button data-file="open">↥ Open project file <kbd>Ctrl O</kbd></button><button data-file="save">↧ Download project <kbd>Ctrl S</kbd></button><hr><a href="BlockLab-Offline.html" download="BlockLab-Offline.html" id="offlineDownload">↓ Download offline app</a></div></div>
+ <button id="examplesButton" class="quiet">Examples</button>
+ <div class="project-title-wrap"><input id="projectTitle" aria-label="Project title" maxlength="60"><span class="title-pencil">✎</span></div>
+ <span id="saveStatus" class="save-status">Saved on this device</span>
+ <div class="topbar-spacer"></div>
+ <button id="tutorialButton" class="tutorial-button"><span>ⓘ</span> Tutorial</button>
+ <button id="saveButton" class="primary"><span>↓</span> Save project</button>
+</header>
+<div class="studio-bar"><div><span class="live-dot"></span> YOUR CREATIVE PLAYGROUND <span class="bar-divider">/</span><span class="subtle">A little code. A lot of possibility.</span></div><button id="referenceButton" class="quiet">&lt;/&gt; Code reference</button></div>
+<main class="studio">
+ <section class="editor-panel">
+  <div class="editor-tabs"><button class="tab active" data-tab="blocks"><span>▦</span> Blocks</button><button class="tab" data-tab="text"><span>&lt;/&gt;</span> JavaScript</button><button class="tab" data-tab="costumes"><span>✎</span> Costumes</button><button class="tab" data-tab="sounds"><span>♫</span> Sounds</button><span id="editingLabel" class="editing-label">Editing Pip</span></div>
+  <div id="blocksView" class="editor-view blocks-view">
+   <nav id="categories" aria-label="Block categories"></nav>
+   <aside class="palette"><div class="palette-heading"><h2 id="categoryTitle">Motion</h2><span id="blockCount"></span></div><p class="palette-hint">Drag a block into your code</p><div id="paletteBlocks"></div><button id="newVariable" class="outline small" hidden>＋ Make a variable</button><div class="palette-bottom">Click a block to add it, too.</div></aside>
+   <div class="workspace-area"><div class="workspace-heading"><span class="sprite-dot"></span><strong id="workspaceSpriteName">Pip</strong><span class="workspace-mode">BLOCK WORKSPACE</span></div><div id="workspace" tabindex="0" aria-label="Block coding workspace"></div><div class="workspace-footer"><span id="workspaceHint">Build something only you could imagine.</span><div class="workspace-tools"><button id="undoButton" title="Undo" aria-label="Undo">↶</button><button id="redoButton" title="Redo" aria-label="Redo">↷</button><span></span><button id="zoomOut" title="Zoom out" aria-label="Zoom out">−</button><button id="zoomReset" title="Reset zoom">100%</button><button id="zoomIn" title="Zoom in" aria-label="Zoom in">＋</button></div></div></div>
+  </div>
+  <div id="textView" class="editor-view text-view" hidden><div class="text-toolbar"><div><strong>JavaScript</strong><span id="codeStatus">Generated from your blocks</span></div><button id="useBlocks" class="outline small">↻ Use blocks’ code</button><button id="apiButton" class="quiet small">API reference ↗</button></div><div class="code-editor"><pre id="lineNumbers" aria-hidden="true">1</pre><textarea id="codeEditor" aria-label="JavaScript code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea></div><div class="code-note"><span>●</span> Editing here runs JavaScript for this sprite. Blocks are kept separately. Use <code>await</code> with actions.</div></div>
+  <div id="costumesView" class="editor-view asset-view" hidden><div class="asset-toolbar"><div><h2>Your costume collection</h2><p>A new look for every idea.</p></div><button id="uploadCostume" class="outline">↥ Upload image</button><button id="drawCostume" class="primary">✎ Draw a costume</button></div><div id="costumeGrid" class="asset-grid"></div><div class="asset-note">PNG, JPG, GIF, WebP and SVG • Images are stored inside your project. GIFs use a still frame.</div></div>
+  <div id="soundsView" class="editor-view asset-view" hidden><div class="asset-toolbar"><div><h2>Give your project a voice</h2><p>Upload sounds and play them with blocks.</p></div><button id="uploadSound" class="primary">↥ Upload sound</button></div><div id="soundList" class="sound-list"></div><div class="asset-note">MP3, WAV, OGG and other audio your browser supports • Up to 5 MB per file.</div></div>
+ </section>
+ <aside class="preview-panel">
+  <div class="stage-toolbar"><div class="stage-actions"><button id="runButton" class="run-button" title="Run project (Ctrl Enter)" aria-label="Run project"><span>⚑</span> Run</button><button id="stopButton" class="stop-button" title="Stop project" aria-label="Stop project">■</button><span id="runStatus">Ready to play</span></div><div><button id="resetButton" class="icon-button" title="Reset sprites" aria-label="Reset sprites">↺</button><button id="fullscreenButton" class="icon-button" title="Presentation mode" aria-label="Presentation mode">⛶</button></div></div>
+  <div id="stageShell" class="stage-shell"><canvas id="stage" width="960" height="720" tabindex="0" aria-label="Project stage. Click to focus, then use arrow keys."></canvas><div id="stageBadges" class="stage-badges"></div><button id="exitFullscreen" hidden>Exit presentation ✕</button></div>
+  <div class="stage-caption"><span><span class="tiny-dot"></span> STAGE <b>480 × 360</b></span><span id="coordinates">x: 0 &nbsp; y: 0</span></div>
+  <section class="sprite-panel"><div class="sprite-heading"><h2>Sprites <span id="spriteCount">1</span></h2><div class="menu-wrap"><button id="addSpriteButton" class="add-button">＋ Add sprite</button><div id="spriteMenu" class="dropdown right" hidden><button id="chooseSprite">◈ Choose a character</button><button id="uploadSprite">↥ Upload sprite</button><button id="paintSprite">✎ Draw sprite</button></div></div></div><div id="spriteList" class="sprite-list"></div><div class="sprite-properties"><label class="name-field">Name<input id="spriteName" maxlength="32"></label><label>x<input id="spriteX" type="number" min="-1000" max="1000"></label><label>y<input id="spriteY" type="number" min="-1000" max="1000"></label><label>Size %<input id="spriteSize" type="number" min="5" max="400"></label><label>Direction<input id="spriteDirection" type="number"></label><button id="toggleVisible" class="property-button" title="Show or hide sprite">◉ Visible</button><button id="duplicateSprite" class="property-button" title="Duplicate sprite">⧉ Copy</button><button id="deleteSprite" class="property-button danger" title="Delete sprite">⌫ Delete</button></div></section>
+  <section class="backdrop-panel"><div id="backdropThumb" class="backdrop-thumb"></div><div><strong>Backdrop</strong><p id="backdropName">Moonlit hills</p></div><button id="backdropButton" class="quiet">Change ↗</button></section>
+  <div id="consolePanel" class="console-panel"><button id="consoleToggle"><span>›_ Console</span><span id="consoleSummary">All systems go</span><span>⌃</span></button><div id="consoleOutput" hidden role="log" aria-live="polite"></div></div>
+ </aside>
+</main>
+<footer class="app-footer"><span><b>MAKE. PLAY. REPEAT.</b> Built for curious minds.</span><span>Projects stay on your device <span class="footer-dot">·</span> <button id="shortcutsButton">Keyboard shortcuts</button></span></footer>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="modal"><div class="modal-heading"><div><span id="modalEyebrow">BLOCK LAB</span><h2 id="modalTitle"></h2></div><button id="closeModal" class="icon-button" aria-label="Close dialog">✕</button></div><div id="modalBody"></div></dialog>
+<input id="projectFile" type="file" accept=".blocklab,.json" hidden><input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden><input id="soundFile" type="file" accept="audio/*" multiple hidden>
+<script src="engine.js"></script><script src="app.js"></script>
+</body></html>
